@@ -475,35 +475,60 @@ def draw_answer_grid_page(pdf: FPDF, puzzles, start_index, page_w, page_h):
         (MARGIN * 2 + box_w, MARGIN * 2 + box_h),
     ]
     group = puzzles[start_index:start_index + 4]
+    pad_x = 0.25
+    title_h = 0.35
+    header_h = 0.3
+    section_gap = 0.12
+    font_options = [(16, 0.28), (14, 0.25), (12, 0.22), (11, 0.2), (10, 0.18), (9, 0.16)]
+
     for idx, puzzle in enumerate(group):
         x, y = positions[idx]
         pdf.rect(x, y, box_w, box_h)
-        pdf.set_font("Helvetica", "B", 13)
-        pdf.set_xy(x, y + 0.1)
-        pdf.cell(box_w, 0.25, f"PUZZLE {start_index + idx + 1:02d}", align="C")
 
         across = sorted([p for p in puzzle["placed"] if p["dir"] == "A"], key=lambda p: p["number"])
         down = sorted([p for p in puzzle["placed"] if p["dir"] == "D"], key=lambda p: p["number"])
 
-        pdf.set_font("Helvetica", "B", 10)
-        pdf.set_xy(x + 0.15, y + 0.45)
-        pdf.cell(box_w - 0.3, 0.18, "Across")
-        cy = y + 0.65
-        pdf.set_font("Helvetica", size=9)
-        for entry in across:
-            pdf.set_xy(x + 0.15, cy)
-            pdf.cell(box_w - 0.3, 0.15, f"{entry['number']}.{entry['word'].title()}")
-            cy += 0.15
+        entry_font, line_h = font_options[-1]
+        for candidate_font, candidate_line_h in font_options:
+            content_h = (
+                title_h + header_h + len(across) * candidate_line_h
+                + section_gap + header_h + len(down) * candidate_line_h
+            )
+            if content_h <= box_h - 0.2:
+                entry_font, line_h = candidate_font, candidate_line_h
+                break
 
-        pdf.set_font("Helvetica", "B", 10)
-        pdf.set_xy(x + 0.15, cy + 0.05)
-        pdf.cell(box_w - 0.3, 0.18, "Down")
-        cy += 0.23
-        pdf.set_font("Helvetica", size=9)
+        content_h = (
+            title_h + header_h + len(across) * line_h
+            + section_gap + header_h + len(down) * line_h
+        )
+        content_top = y + max(0.12, (box_h - content_h) / 2)
+
+        pdf.set_font("Helvetica", "B", entry_font + 2)
+        pdf.set_xy(x, content_top)
+        pdf.cell(box_w, title_h, f"PUZZLE {start_index + idx + 1:02d}", align="C")
+
+        cy = content_top + title_h
+        pdf.set_font("Helvetica", "B", entry_font + 1)
+        pdf.set_xy(x + pad_x, cy)
+        pdf.cell(box_w - 2 * pad_x, header_h, "Across")
+        cy += header_h
+        pdf.set_font("Helvetica", size=entry_font)
+        for entry in across:
+            pdf.set_xy(x + pad_x, cy)
+            pdf.cell(box_w - 2 * pad_x, line_h, f"{entry['number']}. {entry['word'].title()}")
+            cy += line_h
+
+        cy += section_gap
+        pdf.set_font("Helvetica", "B", entry_font + 1)
+        pdf.set_xy(x + pad_x, cy)
+        pdf.cell(box_w - 2 * pad_x, header_h, "Down")
+        cy += header_h
+        pdf.set_font("Helvetica", size=entry_font)
         for entry in down:
-            pdf.set_xy(x + 0.15, cy)
-            pdf.cell(box_w - 0.3, 0.15, f"{entry['number']}.{entry['word'].title()}")
-            cy += 0.15
+            pdf.set_xy(x + pad_x, cy)
+            pdf.cell(box_w - 2 * pad_x, line_h, f"{entry['number']}. {entry['word'].title()}")
+            cy += line_h
 
 
 def build_crossword_pdf(puzzles, page_w, page_h, title, include_cover, photo_bytes, include_answers):
