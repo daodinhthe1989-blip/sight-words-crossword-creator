@@ -349,42 +349,66 @@ def _measure_clue_block_height(pdf, entries, col_w, line_h):
     return lines * line_h
 
 
-def _fit_puzzle_layout(pdf, n_rows, n_cols, across, down, avail_w, page_content_h):
-    """Try progressively smaller grid/clue sizing until the whole block fits
-    the page height, so nothing is ever silently cut off on small trims with
-    many words. Returns the largest layout that fits (or the smallest tried,
-    as a last-resort fallback)."""
-    title_h, gap1, gap2, gap3, bank_h, footer_h, header_h = 0.5, 0.3, 0.25, 0.25, 0.5, 0.35, 0.3
-    grid_ratios = [0.60, 0.52, 0.45, 0.38, 0.32]
-    clue_settings = [(11, 0.22), (10, 0.20), (9, 0.18), (8, 0.16), (7, 0.145)]
+def _puzzle_fits(pdf, puzzle, cell, font_size, line_h, avail_w, page_content_h,
+                  title_h, gap1, gap2, gap3, bank_h, footer_h, header_h):
+    n_rows = puzzle["n_rows"]
+    across = [p for p in puzzle["placed"] if p["dir"] == "A"]
+    down = [p for p in puzzle["placed"] if p["dir"] == "D"]
+    col_w = avail_w / 2
+    pdf.set_font("Helvetica", "B", font_size)
+    clue_block_h = header_h + max(
+        _measure_clue_block_height(pdf, across, col_w, line_h),
+        _measure_clue_block_height(pdf, down, col_w, line_h),
+    )
+    grid_h = cell * n_rows
+    total_h = title_h + gap1 + grid_h + gap2 + clue_block_h + gap3 + bank_h + footer_h
+    return total_h <= page_content_h, clue_block_h
+
+
+def plan_book_layout(page_w, page_h, puzzles, avail_w, page_content_h):
+    """Compute ONE shared cell size + clue font for every puzzle page in the
+    book, so the grid and title line up consistently page to page instead of
+    resizing per-puzzle. Shrinks (book-wide, not per-page) only if the
+    tightest puzzle in the book would otherwise overflow the page.
+
+    Uses its own throwaway PDF for text measurement (dry-run multi_cell
+    needs an active page) so it never depends on the real pdf's page state."""
+    pdf = FPDF(unit="in", format=(page_w, page_h))
+    pdf.add_page()
+
+    title_h, gap1, gap2, gap3, bank_h, footer_h, header_h = 0.55, 0.3, 0.3, 0.25, 0.5, 0.35, 0.32
+    grid_ratios = [0.52, 0.46, 0.40, 0.34, 0.28]
+    clue_settings = [(13, 0.26), (12, 0.24), (11, 0.22), (10, 0.20), (9, 0.18)]
 
     fallback = None
     for grid_ratio in grid_ratios:
-        cell = _fit_cell_size(n_rows, n_cols, avail_w, grid_ratio * page_content_h)
-        grid_w = cell * n_cols
-        grid_h = cell * n_rows
-        col_w = avail_w / 2
+        cell = min(
+            _fit_cell_size(p["n_rows"], p["n_cols"], avail_w, grid_ratio * page_content_h)
+            for p in puzzles
+        )
         for font_size, line_h in clue_settings:
-            pdf.set_font("Helvetica", size=font_size)
-            clue_block_h = header_h + max(
-                _measure_clue_block_height(pdf, across, col_w, line_h),
-                _measure_clue_block_height(pdf, down, col_w, line_h),
-            )
-            total_h = title_h + gap1 + grid_h + gap2 + clue_block_h + gap3 + bank_h + footer_h
+            all_fit = True
+            for p in puzzles:
+                fits, _ = _puzzle_fits(
+                    pdf, p, cell, font_size, line_h, avail_w, page_content_h,
+                    title_h, gap1, gap2, gap3, bank_h, footer_h, header_h,
+                )
+                if not fits:
+                    all_fit = False
+                    break
             layout = {
-                "cell": cell, "grid_w": grid_w, "grid_h": grid_h, "col_w": col_w,
-                "clue_block_h": clue_block_h, "font_size": font_size, "line_h": line_h,
-                "total_h": total_h, "title_h": title_h, "gap1": gap1, "gap2": gap2,
-                "gap3": gap3, "bank_h": bank_h, "footer_h": footer_h, "header_h": header_h,
+                "cell": cell, "font_size": font_size, "line_h": line_h,
+                "title_h": title_h, "gap1": gap1, "gap2": gap2, "gap3": gap3,
+                "bank_h": bank_h, "footer_h": footer_h, "header_h": header_h,
             }
             if fallback is None:
                 fallback = layout
-            if total_h <= page_content_h:
+            if all_fit:
                 return layout
     return fallback
 
 
-def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
+def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number, layout):
     pdf.add_page()
 
     n_rows, n_cols = puzzle["n_rows"], puzzle["n_cols"]
@@ -394,26 +418,24 @@ def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
     down = sorted([p for p in puzzle["placed"] if p["dir"] == "D"], key=lambda p: p["number"])
 
     avail_w = page_w - 2 * MARGIN
-    page_content_h = page_h - 2 * MARGIN
-    layout = _fit_puzzle_layout(pdf, n_rows, n_cols, across, down, avail_w, page_content_h)
-
     cell = layout["cell"]
-    grid_w, grid_h = layout["grid_w"], layout["grid_h"]
-    col_w = layout["col_w"]
+    grid_w, grid_h = cell * n_cols, cell * n_rows
+    col_w = avail_w / 2
     line_h = layout["line_h"]
-    clue_block_h = layout["clue_block_h"]
     title_h, gap1, gap2, gap3, bank_h, header_h = (
         layout["title_h"], layout["gap1"], layout["gap2"], layout["gap3"],
         layout["bank_h"], layout["header_h"],
     )
-    total_h = layout["total_h"]
-    top_offset = MARGIN + max(0.0, (page_content_h - total_h) / 2)
+
+    # Fixed top position on every page - title and grid always line up the
+    # same way when flipping through the book, instead of drifting per-puzzle.
+    top = MARGIN
 
     pdf.set_font("Helvetica", "B", 18)
-    pdf.set_xy(MARGIN, top_offset)
+    pdf.set_xy(MARGIN, top)
     pdf.cell(avail_w, title_h, f"PUZZLE {puzzle_number:02d}", align="C")
 
-    grid_top = top_offset + title_h + gap1
+    grid_top = top + title_h + gap1
     grid_left = MARGIN + (avail_w - grid_w) / 2
 
     pdf.set_line_width(0.01)
@@ -432,13 +454,15 @@ def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
 
     clue_top = grid_top + grid_h + gap2
 
-    pdf.set_font("Helvetica", "B", 12)
+    pdf.set_font("Helvetica", "B", layout["font_size"] + 1)
     pdf.set_xy(MARGIN, clue_top)
     pdf.cell(col_w, header_h, "Across")
     pdf.set_xy(MARGIN + col_w, clue_top)
     pdf.cell(col_w, header_h, "Down")
 
-    pdf.set_font("Helvetica", size=layout["font_size"])
+    # Clue sentences themselves are bold too (not just the headers) so they
+    # read clearly at a glance.
+    pdf.set_font("Helvetica", "B", layout["font_size"])
     y = clue_top + header_h
     for entry in across:
         pdf.set_xy(MARGIN, y)
@@ -450,12 +474,12 @@ def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
         pdf.multi_cell(col_w - 0.1, line_h, f"{entry['number']}. {entry['clue']}")
         y_down = pdf.get_y()
 
-    bank_top = clue_top + clue_block_h + gap3
+    bank_top = max(y, y_down) + gap3
     bank_words = sorted(p["word"] for p in puzzle["placed"])
     bank_text = "   ".join(bank_words)
     pdf.set_draw_color(0, 0, 0)
     pdf.rect(MARGIN, bank_top, avail_w, bank_h)
-    pdf.set_font("Helvetica", size=11)
+    pdf.set_font("Helvetica", "B", layout["font_size"])
     pdf.set_xy(MARGIN + 0.1, bank_top + 0.15)
     pdf.multi_cell(avail_w - 0.2, 0.2, bank_text, align="C")
 
@@ -538,8 +562,12 @@ def build_crossword_pdf(puzzles, page_w, page_h, title, include_cover, photo_byt
     if include_cover:
         draw_cover(pdf, page_w, page_h, title, photo_bytes)
 
+    avail_w = page_w - 2 * MARGIN
+    page_content_h = page_h - 2 * MARGIN
+    layout = plan_book_layout(page_w, page_h, puzzles, avail_w, page_content_h)
+
     for i, puzzle in enumerate(puzzles):
-        draw_puzzle_page(pdf, puzzle, page_w, page_h, i + 1)
+        draw_puzzle_page(pdf, puzzle, page_w, page_h, i + 1, layout)
 
     if include_answers:
         draw_answer_divider(pdf, page_w, page_h)
