@@ -38,88 +38,88 @@ def check_password() -> bool:
 # ---------------------------------------------------------------------------
 WORD_BANK = {
     "Level 1 (Easy)": [
-        {"word": "SEE", "clue": "You do this with your eyes"},
-        {"word": "RUN", "clue": "Move fast using your legs"},
-        {"word": "JUMP", "clue": "Hop up into the air"},
-        {"word": "STOP", "clue": "Opposite of go"},
-        {"word": "LOOK", "clue": "Use your eyes to find something"},
-        {"word": "PLAY", "clue": "Have fun with toys"},
-        {"word": "HELP", "clue": "Give someone a hand"},
-        {"word": "COME", "clue": "Move toward someone"},
-        {"word": "MAKE", "clue": "Build or create something"},
-        {"word": "GOOD", "clue": "Opposite of bad"},
-        {"word": "BLUE", "clue": "Color of the sky"},
-        {"word": "FUNNY", "clue": "Makes you laugh"},
-        {"word": "LITTLE", "clue": "Opposite of big"},
-        {"word": "YELLOW", "clue": "Color of a banana"},
-        {"word": "WHERE", "clue": "Asking about a place"},
-        {"word": "THREE", "clue": "The number after two"},
-        {"word": "AWAY", "clue": "Not here"},
-        {"word": "FIND", "clue": "Look for and discover"},
-        {"word": "DOWN", "clue": "Opposite of up"},
-        {"word": "BIG", "clue": "Opposite of little"},
-        {"word": "RED", "clue": "Color of an apple"},
-        {"word": "EAT", "clue": "Do this with food"},
-        {"word": "SAY", "clue": "Speak words"},
-        {"word": "RIDE", "clue": "Sit on a bike and go"},
-        {"word": "SOON", "clue": "Very shortly"},
-        {"word": "WENT", "clue": "Past tense of go"},
-        {"word": "WANT", "clue": "Wish to have"},
-        {"word": "LIKE", "clue": "Enjoy something"},
-        {"word": "SAW", "clue": "Past tense of see"},
-        {"word": "WELL", "clue": "In a good way"},
-        {"word": "WHAT", "clue": "Asking about a thing"},
-        {"word": "WITH", "clue": "Together with someone"},
-        {"word": "THIS", "clue": "Points to something near"},
-        {"word": "THAT", "clue": "Points to something far"},
-        {"word": "THEY", "clue": "More than one person, not you or me"},
-        {"word": "THERE", "clue": "Points to a place"},
-        {"word": "WHO", "clue": "Asking about a person"},
-        {"word": "NOW", "clue": "At this moment"},
-        {"word": "OUT", "clue": "Opposite of in"},
-        {"word": "NEW", "clue": "Opposite of old"},
+        {"word": "SEE", "clue": "I can ___ the bird in the tree."},
+        {"word": "RUN", "clue": "I like to ___ in the park."},
+        {"word": "JUMP", "clue": "The frog can ___ very high."},
+        {"word": "STOP", "clue": "Please ___ before you cross the street."},
+        {"word": "LOOK", "clue": "___ both ways before you cross."},
+        {"word": "PLAY", "clue": "Let's go ___ outside."},
+        {"word": "HELP", "clue": "Can you ___ me carry this bag?"},
+        {"word": "COME", "clue": "Please ___ here right now."},
+        {"word": "MAKE", "clue": "I want to ___ a sandwich."},
+        {"word": "GOOD", "clue": "You did a ___ job!"},
+        {"word": "BLUE", "clue": "The sky is ___."},
+        {"word": "FUNNY", "clue": "That joke was really ___."},
+        {"word": "LITTLE", "clue": "The puppy is very ___."},
+        {"word": "YELLOW", "clue": "The sun looks ___."},
+        {"word": "WHERE", "clue": "___ is my backpack?"},
+        {"word": "THREE", "clue": "I have ___ apples."},
+        {"word": "AWAY", "clue": "The cat ran ___."},
+        {"word": "FIND", "clue": "Can you ___ my shoes?"},
+        {"word": "DOWN", "clue": "Please sit ___."},
+        {"word": "BIG", "clue": "That is a ___ elephant."},
+        {"word": "RED", "clue": "The apple is ___."},
+        {"word": "EAT", "clue": "I like to ___ pizza."},
+        {"word": "SAY", "clue": "___ hello to your friend."},
+        {"word": "RIDE", "clue": "I like to ___ my bike."},
+        {"word": "SOON", "clue": "We will leave ___."},
+        {"word": "WENT", "clue": "Yesterday I ___ to school."},
+        {"word": "WANT", "clue": "I ___ a new toy."},
+        {"word": "LIKE", "clue": "I ___ ice cream."},
+        {"word": "SAW", "clue": "I ___ a rainbow yesterday."},
+        {"word": "WELL", "clue": "You are doing very ___."},
+        {"word": "WHAT", "clue": "___ is your name?"},
+        {"word": "WITH", "clue": "I went to the park ___ my dad."},
+        {"word": "THIS", "clue": "___ is my favorite book."},
+        {"word": "THAT", "clue": "Look at ___ big dog over there."},
+        {"word": "THEY", "clue": "___ are my best friends."},
+        {"word": "THERE", "clue": "Put the box over ___."},
+        {"word": "WHO", "clue": "___ is knocking at the door?"},
+        {"word": "NOW", "clue": "We need to go ___."},
+        {"word": "OUT", "clue": "Let's go ___ to play."},
+        {"word": "NEW", "clue": "I got a ___ pair of shoes."},
     ],
     "Level 2 (Medium)": [
-        {"word": "NEVER", "clue": "Opposite of always"},
-        {"word": "ALWAYS", "clue": "Every single time"},
-        {"word": "BETWEEN", "clue": "In the middle of two things"},
-        {"word": "CLEAN", "clue": "Opposite of dirty"},
-        {"word": "WRITE", "clue": "Use a pen to make letters"},
-        {"word": "TRY", "clue": "Give it a go"},
-        {"word": "THANK", "clue": "Say this when someone helps you"},
-        {"word": "FAR", "clue": "Opposite of near"},
-        {"word": "PICK", "clue": "Choose one"},
-        {"word": "FOUND", "clue": "Past tense of find"},
-        {"word": "LAUGH", "clue": "What you do when something is funny"},
-        {"word": "PLEASE", "clue": "A polite word used when asking"},
-        {"word": "WALK", "clue": "Move slowly on your feet"},
-        {"word": "EIGHT", "clue": "The number after seven"},
-        {"word": "DRINK", "clue": "Do this when you are thirsty"},
-        {"word": "GROW", "clue": "To get bigger over time"},
-        {"word": "FINISH", "clue": "Opposite of start"},
-        {"word": "TOGETHER", "clue": "Not apart"},
-        {"word": "TODAY", "clue": "This very day"},
-        {"word": "SMALL", "clue": "Opposite of large"},
-        {"word": "DONE", "clue": "Finished"},
-        {"word": "WILL", "clue": "Going to happen in the future"},
-        {"word": "LONG", "clue": "Opposite of short"},
-        {"word": "BEFORE", "clue": "Earlier than"},
-        {"word": "AFTER", "clue": "Later than"},
-        {"word": "AROUND", "clue": "On every side of"},
-        {"word": "ABOVE", "clue": "Higher than"},
-        {"word": "BELOW", "clue": "Lower than"},
-        {"word": "INSIDE", "clue": "Opposite of outside"},
-        {"word": "OUTSIDE", "clue": "Opposite of inside"},
-        {"word": "MORNING", "clue": "The start of the day"},
-        {"word": "NIGHT", "clue": "When the sky is dark"},
-        {"word": "FRIEND", "clue": "Someone you like to play with"},
-        {"word": "HAPPY", "clue": "Feeling glad"},
-        {"word": "SAD", "clue": "Feeling unhappy"},
-        {"word": "ANGRY", "clue": "Feeling very upset"},
-        {"word": "SLEEPY", "clue": "Feeling tired"},
-        {"word": "HUNGRY", "clue": "Feeling like you need food"},
-        {"word": "THIRSTY", "clue": "Feeling like you need a drink"},
-        {"word": "GENTLE", "clue": "Soft and kind"},
+        {"word": "NEVER", "clue": "I have ___ seen a real lion."},
+        {"word": "ALWAYS", "clue": "I ___ brush my teeth at night."},
+        {"word": "BETWEEN", "clue": "The cat is sitting ___ the two chairs."},
+        {"word": "CLEAN", "clue": "Please ___ your room."},
+        {"word": "WRITE", "clue": "I will ___ a letter to my friend."},
+        {"word": "TRY", "clue": "Please ___ your best on the test."},
+        {"word": "THANK", "clue": "I want to ___ you for the gift."},
+        {"word": "FAR", "clue": "The store is not ___ from here."},
+        {"word": "PICK", "clue": "Please ___ your favorite color."},
+        {"word": "FOUND", "clue": "I ___ my missing sock."},
+        {"word": "LAUGH", "clue": "The movie made everyone ___."},
+        {"word": "PLEASE", "clue": "___ pass the salt."},
+        {"word": "WALK", "clue": "We like to ___ to school."},
+        {"word": "EIGHT", "clue": "I have ___ crayons in my box."},
+        {"word": "DRINK", "clue": "I need to ___ some water."},
+        {"word": "GROW", "clue": "Plants ___ when you water them."},
+        {"word": "FINISH", "clue": "I need to ___ my homework."},
+        {"word": "TOGETHER", "clue": "We baked cookies ___."},
+        {"word": "TODAY", "clue": "___ is a beautiful day."},
+        {"word": "SMALL", "clue": "The kitten is very ___."},
+        {"word": "DONE", "clue": "I am ___ with my homework."},
+        {"word": "WILL", "clue": "I ___ see you tomorrow."},
+        {"word": "LONG", "clue": "The river is very ___."},
+        {"word": "BEFORE", "clue": "Wash your hands ___ you eat."},
+        {"word": "AFTER", "clue": "We will play ___ dinner."},
+        {"word": "AROUND", "clue": "We walked ___ the park."},
+        {"word": "ABOVE", "clue": "The plane flew ___ the clouds."},
+        {"word": "BELOW", "clue": "The fish swim ___ the boat."},
+        {"word": "INSIDE", "clue": "Let's go ___ because it's cold."},
+        {"word": "OUTSIDE", "clue": "The kids are playing ___."},
+        {"word": "MORNING", "clue": "I eat breakfast every ___."},
+        {"word": "NIGHT", "clue": "The stars come out at ___."},
+        {"word": "FRIEND", "clue": "She is my best ___."},
+        {"word": "HAPPY", "clue": "The puppy looks so ___."},
+        {"word": "SAD", "clue": "He felt ___ when his toy broke."},
+        {"word": "ANGRY", "clue": "She was ___ when she lost the game."},
+        {"word": "SLEEPY", "clue": "The baby looks very ___."},
+        {"word": "HUNGRY", "clue": "I am ___, let's eat."},
+        {"word": "THIRSTY", "clue": "I am ___, I need water."},
+        {"word": "GENTLE", "clue": "Please be ___ with the puppy."},
     ],
 }
 
@@ -340,26 +340,85 @@ def draw_answer_divider(pdf: FPDF, page_w, page_h):
     pdf.cell(box_w, 0.4, "ANSWER KEYS", align="C")
 
 
+def _measure_clue_block_height(pdf, entries, col_w, line_h):
+    lines = 0
+    for entry in entries:
+        wrapped = pdf.multi_cell(col_w - 0.1, line_h, f"{entry['number']}. {entry['clue']}",
+                                  dry_run=True, output="LINES")
+        lines += len(wrapped)
+    return lines * line_h
+
+
+def _fit_puzzle_layout(pdf, n_rows, n_cols, across, down, avail_w, page_content_h):
+    """Try progressively smaller grid/clue sizing until the whole block fits
+    the page height, so nothing is ever silently cut off on small trims with
+    many words. Returns the largest layout that fits (or the smallest tried,
+    as a last-resort fallback)."""
+    title_h, gap1, gap2, gap3, bank_h, footer_h, header_h = 0.5, 0.3, 0.25, 0.25, 0.5, 0.35, 0.3
+    grid_ratios = [0.60, 0.52, 0.45, 0.38, 0.32]
+    clue_settings = [(11, 0.22), (10, 0.20), (9, 0.18), (8, 0.16), (7, 0.145)]
+
+    fallback = None
+    for grid_ratio in grid_ratios:
+        cell = _fit_cell_size(n_rows, n_cols, avail_w, grid_ratio * page_content_h)
+        grid_w = cell * n_cols
+        grid_h = cell * n_rows
+        col_w = avail_w / 2
+        for font_size, line_h in clue_settings:
+            pdf.set_font("Helvetica", size=font_size)
+            clue_block_h = header_h + max(
+                _measure_clue_block_height(pdf, across, col_w, line_h),
+                _measure_clue_block_height(pdf, down, col_w, line_h),
+            )
+            total_h = title_h + gap1 + grid_h + gap2 + clue_block_h + gap3 + bank_h + footer_h
+            layout = {
+                "cell": cell, "grid_w": grid_w, "grid_h": grid_h, "col_w": col_w,
+                "clue_block_h": clue_block_h, "font_size": font_size, "line_h": line_h,
+                "total_h": total_h, "title_h": title_h, "gap1": gap1, "gap2": gap2,
+                "gap3": gap3, "bank_h": bank_h, "footer_h": footer_h, "header_h": header_h,
+            }
+            if fallback is None:
+                fallback = layout
+            if total_h <= page_content_h:
+                return layout
+    return fallback
+
+
 def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
     pdf.add_page()
-    pdf.set_font("Helvetica", "B", 18)
-    pdf.set_xy(MARGIN, MARGIN)
-    pdf.cell(page_w - 2 * MARGIN, 0.4, f"PUZZLE {puzzle_number:02d}", align="C")
 
     n_rows, n_cols = puzzle["n_rows"], puzzle["n_cols"]
     occupied = puzzle["occupied"]
     number_map = puzzle["number_map"]
+    across = sorted([p for p in puzzle["placed"] if p["dir"] == "A"], key=lambda p: p["number"])
+    down = sorted([p for p in puzzle["placed"] if p["dir"] == "D"], key=lambda p: p["number"])
 
-    grid_top = MARGIN + 0.6
     avail_w = page_w - 2 * MARGIN
-    avail_h = page_h * 0.5
-    cell = _fit_cell_size(n_rows, n_cols, avail_w, avail_h)
-    grid_w = cell * n_cols
+    page_content_h = page_h - 2 * MARGIN
+    layout = _fit_puzzle_layout(pdf, n_rows, n_cols, across, down, avail_w, page_content_h)
+
+    cell = layout["cell"]
+    grid_w, grid_h = layout["grid_w"], layout["grid_h"]
+    col_w = layout["col_w"]
+    line_h = layout["line_h"]
+    clue_block_h = layout["clue_block_h"]
+    title_h, gap1, gap2, gap3, bank_h, header_h = (
+        layout["title_h"], layout["gap1"], layout["gap2"], layout["gap3"],
+        layout["bank_h"], layout["header_h"],
+    )
+    total_h = layout["total_h"]
+    top_offset = MARGIN + max(0.0, (page_content_h - total_h) / 2)
+
+    pdf.set_font("Helvetica", "B", 18)
+    pdf.set_xy(MARGIN, top_offset)
+    pdf.cell(avail_w, title_h, f"PUZZLE {puzzle_number:02d}", align="C")
+
+    grid_top = top_offset + title_h + gap1
     grid_left = MARGIN + (avail_w - grid_w) / 2
 
     pdf.set_line_width(0.01)
     pdf.set_draw_color(0, 0, 0)
-    pdf.set_font("Helvetica", size=max(6, min(8, cell * 18)))
+    pdf.set_font("Helvetica", size=max(7, min(11, cell * 20)))
     for r in range(n_rows):
         for c in range(n_cols):
             if (r, c) not in occupied:
@@ -371,38 +430,38 @@ def draw_puzzle_page(pdf: FPDF, puzzle, page_w, page_h, puzzle_number):
                 pdf.set_xy(x + 0.02, y + 0.01)
                 pdf.cell(cell - 0.04, 0.12, str(number_map[(r, c)]), align="L")
 
-    across = sorted([p for p in puzzle["placed"] if p["dir"] == "A"], key=lambda p: p["number"])
-    down = sorted([p for p in puzzle["placed"] if p["dir"] == "D"], key=lambda p: p["number"])
-
-    clue_top = grid_top + n_rows * cell + 0.3
-    col_w = (page_w - 2 * MARGIN) / 2
+    clue_top = grid_top + grid_h + gap2
 
     pdf.set_font("Helvetica", "B", 12)
     pdf.set_xy(MARGIN, clue_top)
-    pdf.cell(col_w, 0.25, "Across")
+    pdf.cell(col_w, header_h, "Across")
     pdf.set_xy(MARGIN + col_w, clue_top)
-    pdf.cell(col_w, 0.25, "Down")
+    pdf.cell(col_w, header_h, "Down")
 
-    pdf.set_font("Helvetica", size=10)
-    y = clue_top + 0.28
+    pdf.set_font("Helvetica", size=layout["font_size"])
+    y = clue_top + header_h
     for entry in across:
         pdf.set_xy(MARGIN, y)
-        pdf.multi_cell(col_w - 0.1, 0.2, f"{entry['number']}. {entry['clue']}")
-        y = max(y + 0.2, pdf.get_y())
-    y_down = clue_top + 0.28
+        pdf.multi_cell(col_w - 0.1, line_h, f"{entry['number']}. {entry['clue']}")
+        y = pdf.get_y()
+    y_down = clue_top + header_h
     for entry in down:
         pdf.set_xy(MARGIN + col_w, y_down)
-        pdf.multi_cell(col_w - 0.1, 0.2, f"{entry['number']}. {entry['clue']}")
-        y_down = max(y_down + 0.2, pdf.get_y())
+        pdf.multi_cell(col_w - 0.1, line_h, f"{entry['number']}. {entry['clue']}")
+        y_down = pdf.get_y()
 
-    bank_top = max(y, y_down) + 0.2
+    bank_top = clue_top + clue_block_h + gap3
     bank_words = sorted(p["word"] for p in puzzle["placed"])
     bank_text = "   ".join(bank_words)
     pdf.set_draw_color(0, 0, 0)
-    pdf.rect(MARGIN, bank_top, page_w - 2 * MARGIN, 0.5)
-    pdf.set_font("Helvetica", size=10)
+    pdf.rect(MARGIN, bank_top, avail_w, bank_h)
+    pdf.set_font("Helvetica", size=11)
     pdf.set_xy(MARGIN + 0.1, bank_top + 0.15)
-    pdf.multi_cell(page_w - 2 * MARGIN - 0.2, 0.2, bank_text, align="C")
+    pdf.multi_cell(avail_w - 0.2, 0.2, bank_text, align="C")
+
+    pdf.set_font("Helvetica", size=10)
+    pdf.set_xy(MARGIN, page_h - MARGIN - 0.05)
+    pdf.cell(avail_w, 0.2, f"{puzzle_number:02d}", align="C")
 
 
 def draw_answer_grid_page(pdf: FPDF, puzzles, start_index, page_w, page_h):
